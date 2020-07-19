@@ -4,7 +4,6 @@ import { SiteContext } from "./SiteContext";
 import SwipeableViews from "react-swipeable-views";
 import Styled from "styled-components";
 import {
-  Container,
   Tabs,
   Tab,
   AppBar,
@@ -75,7 +74,7 @@ export const CourseHome = () => {
   const classes = useStyles();
   const theme = useTheme();
   return (
-    <Container maxWidth="sm">
+      <Styles>
       <div className={classes.root}>
         <AppBar position="static" color="default">
           <Tabs
@@ -86,9 +85,9 @@ export const CourseHome = () => {
             variant="fullWidth"
             aria-label="full width tabs example"
           >
-            <Tab label="Item One" {...a11yProps(0)} />
-            <Tab label="Item Two" {...a11yProps(1)} />
-            <Tab label="Item Three" {...a11yProps(2)} />
+            <Tab label="Home" {...a11yProps(0)} />
+            <Tab label="Module" {...a11yProps(1)} />
+            <Tab label="History" {...a11yProps(2)} />
           </Tabs>
         </AppBar>
         <SwipeableViews
@@ -107,6 +106,12 @@ export const CourseHome = () => {
           </TabPanel>
         </SwipeableViews>
       </div>
-    </Container>
+    </Styles>
   );
 };
+
+const Styles = Styled.div`
+ .MuiList-padding {
+     padding: 0 0 15px 0;
+ }
+`;
