@@ -52,7 +52,7 @@ export const PreLogin = () => {
   const { apiURL } = contextData;
 
   const navigateToRegister = () => {
-    history.push("/userlogin");
+    history.push("/userregister");
   };
 
   const onLoginSubmit = data => {

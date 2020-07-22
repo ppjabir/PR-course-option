@@ -8,16 +8,22 @@ import {
   List,
   ListItem,
   ListItemText,
-  Divider
+  ListItemIcon,
+  Divider,
+  Avatar
 } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   root: {
     width: "100%",
-    backgroundColor: '#4AA882',
+    backgroundColor: "#4AA882",
     paddingTop: 0,
-    paddingBottom: '15px',
-    color: '#fff'
+    paddingBottom: 0,
+    color: "#fff"
+  },
+  large: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
   }
 }));
 export const UserListing = () => {
@@ -32,30 +38,32 @@ export const UserListing = () => {
   const classes = useStyles();
   return (
     <Styles>
-      
-        {existingUser ? (
-          <List component="nav" className={classes.root}>
-            {existingUser.memberList.map((item, key) => (
-              <>
-                <ListItem button key={key} onClick={() => handleMemberClick()}>
-                  <ListItemText>
-                    <p>Name: {item.name}</p>
-                    {item.age && <p>age: {item.age}</p>}
-                    {item.rollNumber && <p>Roll Number: {item.rollNumber}</p>}
-                    <p>
-                      {item.answeredToday === "N"
-                        ? "അവസാന ക്ലാസ്സിലെ ഉത്തരം അയച്ചിട്ടില്ല"
-                        : "അവസാന ക്ലാസ്സിലെ ഉത്തരം അയച്ചു"}
-                    </p>
-                  </ListItemText>
-                </ListItem>
-                <Divider />
-              </>
-            ))}
-          </List>
-        ) : (
-          <h2>NO Data</h2>
-        )}
+      {existingUser ? (
+        <List component="nav" className={classes.root}>
+          {existingUser.memberList.map((item, key) => (
+            <>
+              <ListItem button key={key} onClick={() => handleMemberClick()}>
+                <ListItemText>
+                  <p>Name: {item.name}</p>
+                  {item.age && <p>age: {item.age}</p>}
+                  {item.rollNumber && <p>Roll Number: {item.rollNumber}</p>}
+                  <p>
+                    {item.answeredToday === "N"
+                      ? "അവസാന ക്ലാസ്സിലെ ഉത്തരം അയച്ചിട്ടില്ല"
+                      : "അവസാന ക്ലാസ്സിലെ ഉത്തരം അയച്ചു"}
+                  </p>
+                </ListItemText>
+                <ListItemIcon>
+                    <Avatar className={classes.large}>H</Avatar>
+                </ListItemIcon>
+              </ListItem>
+              <Divider />
+            </>
+          ))}
+        </List>
+      ) : (
+        <h2>NO Data</h2>
+      )}
     </Styles>
   );
 };

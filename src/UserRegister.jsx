@@ -6,12 +6,14 @@ import PhoneInput from "react-phone-input-2";
 import { SiteContext } from "./SiteContext";
 import "react-phone-input-2/lib/material.css";
 import { withStyles } from "@material-ui/core/styles";
+import AddIcon from "@material-ui/icons/Add";
 import {
   TextField,
   Container,
   Button,
   Box,
-  Typography
+  Typography,
+  Fab
 } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 import DateFnsUtils from "@date-io/date-fns";
@@ -62,7 +64,7 @@ const PeaceRadioButton = withStyles(theme => ({
   }
 }))(Button);
 
-export const UserLogin = () => {
+export const UserRegister = () => {
   var contextData = useContext(SiteContext);
   const { apiURL } = contextData;
   const history = useHistory();
@@ -198,7 +200,7 @@ export const UserLogin = () => {
             <Controller
               as={PeaceRadioTextField}
               name="email"
-              label="Email"
+              label="Email ID"
               variant="outlined"
               control={control}
               InputLabelProps={{
@@ -240,6 +242,41 @@ export const UserLogin = () => {
               <span className="requiredField">Address field is required</span>
             )}
           </Box>
+          <Box mb={2} mt={2}>
+            <Controller
+              as={PeaceRadioTextField}
+              name="qualification"
+              label="Highest Qualification"
+              variant="outlined"
+              control={control}
+              InputLabelProps={{
+                shrink: true,
+                style: { color: "#4AA882" }
+              }}
+              ref={register}
+              fullWidth
+            />
+          </Box>
+          <Box mb={2} mt={2}>
+            <label htmlFor="upload-photo">
+              <input
+                style={{ display: "none" }}
+                id="upload-photo"
+                name="upload-photo"
+                type="file"
+                ref={register}
+              />
+              <Fab
+                color="#4AA882"
+                size="small"
+                component="div"
+                aria-label="add"
+                variant="extended"
+              >
+                <AddIcon /> Upload photo
+              </Fab>
+            </label>
+          </Box>
           {alreadyRegistered && (
             <span className="requiredField">
               Mobile number already registered
@@ -265,7 +302,8 @@ const Styles = Styled.div`
     }
     &+div:before {
         content: 'Mobile Number';
-        color: #4AA882
+        color: #4AA882;
+        left: 8px;
     }
 }
 .react-tel-input .flag-dropdown {
