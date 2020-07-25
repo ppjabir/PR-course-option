@@ -12,6 +12,7 @@ import {
   Divider,
   Avatar
 } from "@material-ui/core";
+import NavBar from "./components/NavBar";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -39,7 +40,9 @@ export const UserListing = () => {
   return (
     <Styles>
       {existingUser ? (
-        <List component="nav" className={classes.root}>
+        <React.Fragment>
+        <NavBar></NavBar>
+        {/* <List component="nav" className={classes.root}>
           {existingUser.memberList.map((item, key) => (
             <>
               <ListItem button key={key} onClick={() => handleMemberClick()}>
@@ -60,7 +63,8 @@ export const UserListing = () => {
               <Divider />
             </>
           ))}
-        </List>
+        </List> */}
+        </React.Fragment>
       ) : (
         <h2>NO Data</h2>
       )}
