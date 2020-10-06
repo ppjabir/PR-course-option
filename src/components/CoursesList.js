@@ -1,12 +1,13 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Divider from '@material-ui/core/Divider';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Typography from '@material-ui/core/Typography';
 import SchoolIcon from '@material-ui/icons/School';
+import {
+    makeStyles,
+    List,
+    ListItem,
+    Divider,
+    ListItemText,
+    ListItemIcon
+} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,41 +24,28 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function AlignItemsList() {
+function CoursesList(props){
     const classes = useStyles();
-
+    console.log("memberprops", props);
     return (
         <List component="nav" className={classes.root}>
+            {props.data.map((item, key) => (
+                <>
             <ListItem button alignItems="flex-start">
                 <ListItemIcon>
                     <SchoolIcon />
                 </ListItemIcon>
                 <ListItemText
-                    primary="അന്നൂർ (Annoor)"
-                    secondary="ഖുർആൻ ലേണിംഗ് പ്രോഗ്രാം"
+                    primary={`${item.type_name}(${item.type_name_eng})`}
+                    // secondary="ഖുർആൻ ലേണിംഗ് പ്രോഗ്രാം"
                 />
             </ListItem>
             <Divider variant="inset" component="li" />
-            <ListItem button alignItems="flex-start">
-                <ListItemIcon>
-                    <SchoolIcon />
-                </ListItemIcon>
-                <ListItemText
-                    primary="ലൈഫ്  (Life)"
-                    secondary="ഖുർആൻ ലേണിംഗ് പ്രോഗ്രാം"
-                />
-            </ListItem>
-            <Divider variant="inset" component="li" />
-            <ListItem button alignItems="flex-start">
-                <ListItemIcon>
-                    <SchoolIcon />
-                </ListItemIcon>
-                <ListItemText
-                    primary="ഇ മദ്രസ"
-                    secondary="മദ്രസ ലേണിംഗ് പ്രോഗ്രാം"
-                />
-            </ListItem>
-            {/* <Divider /> */}
+            </>
+            ))}
+            
         </List>
     );
 }
+
+export default CoursesList;

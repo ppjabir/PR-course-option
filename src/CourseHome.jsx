@@ -1,22 +1,17 @@
-import React, { useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import { SiteContext } from "./SiteContext";
 import SwipeableViews from "react-swipeable-views";
 import Styled from "styled-components";
-import {
-  Tabs,
-  Tab,
-  AppBar,
-  Typography,
-  Box
-} from "@material-ui/core";
+import { Tabs, Tab, AppBar, Box } from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import NavBar from "./components/NavBar";
-import Profile from "./components/Profile";
-import CoursesList from "./components/CoursesList";
-import HomeIcon from '@material-ui/icons/Home';
-import SchoolIcon from '@material-ui/icons/School';
-import MenuBookIcon from '@material-ui/icons/MenuBook';
+import { Profile } from "./components/Profile";
+import { ModuleTab } from "./components/ModuleTab";
+import HomeIcon from "@material-ui/icons/Home";
+import SchoolIcon from "@material-ui/icons/School";
+import MenuBookIcon from "@material-ui/icons/MenuBook";
+import { useHistory } from "react-router-dom";
 import Fab from "./components/Fab";
 
 function TabPanel(props) {
@@ -30,11 +25,7 @@ function TabPanel(props) {
       aria-labelledby={`full-width-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box p={0}>
-          {children}
-        </Box>
-      )}
+      {value === index && <Box p={0}>{children}</Box>}
     </div>
   );
 }
@@ -56,23 +47,27 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     backgroundColor: theme.palette.primary.light,
     color: theme.palette.primary.dark,
-    boxShadow: "none",
+    boxShadow: "none"
   },
   tab: {
     position: "relative",
     backgroundColor: theme.palette.primary.light,
-    boxShadow: '0 2px 5px 2px rgba(0, 0, 0, .2)',
+    boxShadow: "0 2px 5px 2px rgba(0, 0, 0, .2)"
   },
   tabPanelSwipe: {
     backgroundColor: "#FFF",
-    height: "100%",
+    height: "100%"
     // boxShadow: '0 2px 5px 2px rgba(0, 0, 0, .2)',
-  },
+  }
 }));
 
-export const CourseHome = () => {
-  const [value, setValue] = React.useState(0);
-
+export const CourseHome = props => {
+  var contextData = useContext(SiteContext);
+  const { apiURL } = contextData;
+  const [value, setValue] = useState(0);
+  const [homeTabData, setHomeTabData] = useState(null);
+  const [moduleTabData, setModuleTabData] = useState(null);
+  const history = useHistory();
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -82,8 +77,39 @@ export const CourseHome = () => {
   };
   const classes = useStyles();
   const theme = useTheme();
+  useEffect(() => {
+    if (props.location && props.location.courseName) {
+      var formdata = new FormData();
+      formdata.append("userId", window.myToken);
+      formdata.append("courseType", props.location.courseName);
+      formdata.append("rollNumber", props.location.selectedRollNumber);
+      var requestOptions = {
+        method: "POST",
+        body: formdata,
+        redirect: "follow"
+      };
+      const endpoint = `${apiURL}course/getHomePageForCourse.php`;
+      const endpointModule = `${apiURL}course/getModulePageForCourse.php`;
+      fetch(endpoint, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          if (result.success === "Y") {
+            setHomeTabData(result);
+          }
+        });
+      fetch(endpointModule, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          if (result.success === "Y") {
+            setModuleTabData(result);
+          }
+        });
+    } else {
+      history.push("/");
+    }
+  }, []);
   return (
-      <Styles>
+    <Styles>
       <div className={classes.root}>
         <NavBar></NavBar>
         <AppBar position="static" color="default">
@@ -104,15 +130,30 @@ export const CourseHome = () => {
           axis={theme.direction === "rtl" ? "x-reverse" : "x"}
           index={value}
           onChangeIndex={handleChangeIndex}
-          className={classes.tabPanelSwipe} 
+          className={classes.tabPanelSwipe}
         >
-          <TabPanel className={classes.tabPanel} value={value} index={0} dir={theme.direction}>
-            <Profile />
+          <TabPanel
+            className={classes.tabPanel}
+            value={value}
+            index={0}
+            dir={theme.direction}
+          >
+            <Profile data={homeTabData} />
           </TabPanel>
-          <TabPanel className={classes.tabPanel} value={value} index={1} dir={theme.direction}>
-            <CoursesList />
+          <TabPanel
+            className={classes.tabPanel}
+            value={value}
+            index={1}
+            dir={theme.direction}
+          >
+            <ModuleTab data={moduleTabData} />
           </TabPanel>
-          <TabPanel className={classes.tabPanel} value={value} index={2} dir={theme.direction}>
+          <TabPanel
+            className={classes.tabPanel}
+            value={value}
+            index={2}
+            dir={theme.direction}
+          >
             Pending
           </TabPanel>
           <Fab />

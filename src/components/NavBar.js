@@ -1,10 +1,21 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import { makeStyles } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import IconButton from '@material-ui/core/IconButton'
+import { useHistory } from "react-router-dom";
+import { SiteContext } from "../SiteContext"
+// import Toolbar from '@material-ui/core/Toolbar'
+// import Typography from '@material-ui/core/Typography'
+// import IconButton from '@material-ui/core/IconButton'
+import {
+    Toolbar,
+    Typography,
+    IconButton
+} from '@material-ui/core';
 // import { MenuIcon } from '@material-ui/icons'
+// import {
+//     ArrowBackIcon,
+//     ExitToAppIcon
+// } from '@material-ui/icons';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ShareIcon from '@material-ui/icons/Share';
@@ -15,9 +26,18 @@ const useStyles = makeStyles( (theme) => ({
     },
 }) )
 
+
+
 function NavBar() {
     const classes = useStyles();
-
+    var contextData = useContext(SiteContext);
+const { setIsLoggedIn } = contextData;
+const history = useHistory();
+const logoutClick = () => {
+    setIsLoggedIn(false);
+    history.push("/");
+}
+    
     return (
         <div>
             <AppBar position="static">
@@ -49,7 +69,7 @@ function NavBar() {
                         aria-haspopup="true"
                         color="inherit"
                     >
-                        <ExitToAppIcon />
+                        <ExitToAppIcon onClick={()=> logoutClick()}/>
                     </IconButton>
                 </div>
                 </Toolbar>

@@ -68,7 +68,7 @@ export const PreLogin = () => {
       body: formdata,
       redirect: "follow"
     };
-    const endpoint = `${apiURL}dbUserLogin.php`;
+    const endpoint = `${apiURL}register/dbUserLogin.php`;
     fetch(endpoint, requestOptions)
       .then(response => response.json())
       .then(result => {

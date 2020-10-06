@@ -110,7 +110,7 @@ export const UserRegister = () => {
         body: formdata,
         redirect: "follow"
       };
-      const endpoint = `${apiURL}dbRegisterCandidate.php`;
+      const endpoint = `${apiURL}register/dbRegisterCandidate.php`;
       fetch(endpoint, requestOptions)
         .then(response => response.json())
         .then(result => {

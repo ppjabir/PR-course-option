@@ -1,33 +1,30 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import EditIcon from '@material-ui/icons/Edit';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import NavigationIcon from '@material-ui/icons/Navigation';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        '& > *': {
-            // margin: theme.spacing(1),
-            position: 'absolute',
-            bottom: theme.spacing(7),
-            right: theme.spacing(2),
-        },
-    },
-    extendedIcon: {
-        marginRight: theme.spacing(1),
-    },
+const useStyles = makeStyles(theme => ({
+  root: {
+    "& > *": {
+      // margin: theme.spacing(1),
+      position: "absolute",
+      bottom: theme.spacing(7),
+      right: theme.spacing(2)
+    }
+  },
+  extendedIcon: {
+    marginRight: theme.spacing(1)
+  }
 }));
 
 export default function FloatingActionButtons() {
-    const classes = useStyles();
+  const classes = useStyles();
 
-    return (
-        <div className={classes.root}>
-            <Fab color="primary" aria-label="add">
-                <AddIcon />
-            </Fab>
-        </div>
-    );
+  return (
+    <div className={classes.root}>
+      <Fab color="primary" aria-label="add">
+        <AddIcon />
+      </Fab>
+    </div>
+  );
 }

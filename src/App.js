@@ -4,12 +4,15 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { UserRegister } from "./UserRegister";
 //import { NoMatch } from './NoMatch';
 import { UserListing } from "./UserListing";
-import { CourseHome } from "./CourseHome";
+import { CourseListing } from "./CourseListing";
 import { SiteContext } from "./SiteContext";
 import { Spinner } from "./components/Spinner";
 import { PreLogin } from "./PreLogin";
+import {AddMember} from "./AddMember";
+import {CourseHome} from "./CourseHome";
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-const BASE_API_URL = "https://prms.peaceradio.com/courses2/apis/register/";
+const BASE_API_URL = "https://prms.peaceradio.com/courses2/apis/";
+const BASE_AUDIO_API_URL = "https://prms.peaceradio.com/courses_new/";
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -44,7 +47,7 @@ function App() {
   useEffect(() => {
     var formdata = new FormData();
     formdata.append("userId", window.myToken);
-    const endpoint = `${BASE_API_URL}getRegisteredCandidatesData.php`;
+    const endpoint = `${BASE_API_URL}register/getRegisteredCandidatesData.php`;
 
     fetch(endpoint, {
       method: "POST",
@@ -70,7 +73,8 @@ function App() {
     setExistingUser,
     existingUser,
     setIsLoggedIn,
-    apiURL: BASE_API_URL
+    apiURL: BASE_API_URL,
+    audioURL: BASE_AUDIO_API_URL
   };
 
   return (
@@ -79,7 +83,9 @@ function App() {
         <Router>
           {/* <Route exact path="/userListing" component={UserListing} /> */}
           <Route exact path="/userregister" component={UserRegister} />
-          <Route exact path="/membercourse" component={CourseHome} />
+          <Route exact path="/membercourse" component={CourseListing} />
+          <Route exact path="/addmember" component={AddMember} />
+          <Route exact path="/courseHome" component={CourseHome} />
           <Route
             exact
             path="/"
