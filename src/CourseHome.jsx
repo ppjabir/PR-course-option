@@ -8,6 +8,7 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import NavBar from "./components/NavBar";
 import { Profile } from "./components/Profile";
 import { ModuleTab } from "./components/ModuleTab";
+import {HelpDeskTab} from "./components/HelpDeskTab";
 import HomeIcon from "@material-ui/icons/Home";
 import SchoolIcon from "@material-ui/icons/School";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
@@ -67,6 +68,7 @@ export const CourseHome = props => {
   const [value, setValue] = useState(0);
   const [homeTabData, setHomeTabData] = useState(null);
   const [moduleTabData, setModuleTabData] = useState(null);
+  const [helpDeskTabData, setHelpDeskTabData] = useState(null);
   const history = useHistory();
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -90,6 +92,7 @@ export const CourseHome = props => {
       };
       const endpoint = `${apiURL}course/getHomePageForCourse.php`;
       const endpointModule = `${apiURL}course/getModulePageForCourse.php`;
+      const endPointHelpDesk = `${apiURL}course/getHistoryPageForCourse.php`;
       fetch(endpoint, requestOptions)
         .then(response => response.json())
         .then(result => {
@@ -102,6 +105,13 @@ export const CourseHome = props => {
         .then(result => {
           if (result.success === "Y") {
             setModuleTabData(result);
+          }
+        });
+        fetch(endPointHelpDesk, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+          if (result.success === "Y") {
+            setHelpDeskTabData(result);
           }
         });
     } else {
@@ -154,7 +164,7 @@ export const CourseHome = props => {
             index={2}
             dir={theme.direction}
           >
-            Pending
+            <HelpDeskTab data={helpDeskTabData} />
           </TabPanel>
           <Fab />
         </SwipeableViews>

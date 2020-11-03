@@ -83,12 +83,13 @@ function Row(props) {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={3}>
           <Collapse in={audioOpen} timeout="auto" unmountOnExit>
             <Box margin={1}>
+              {`${audioURL}classesAudios/${row.classAudio}`}
             <AudioPlayer
                       autoPlay={false}
                       showSkipControls={false}
                       showJumpControls={false}
                       volume={0.8}
-                      src={`${audioURL}${row.classAudio}`}
+                      src={`${audioURL}classesAudios/${row.classAudio}`}
                       loop={false}
                       loopOff={true}
                       customAdditionalControls={[]}
